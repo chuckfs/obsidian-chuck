@@ -1,6 +1,6 @@
-# Local AI Vault
+# Obsidian Chcuk
 
-**Local AI Vault** is an **offline-first** AI assistant and vault manager plugin for Obsidian. It performs intelligent context tagging, semantic search, and basic reasoning using only local computation. No APIs. No cloud. No setup.
+**Obsidian Chuck** is an **offline-first** AI assistant and vault manager plugin for Obsidian. It performs intelligent context tagging, semantic search, and basic reasoning using only local computation. No APIs. No cloud. No setup.
 
 ---
 
