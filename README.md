@@ -59,7 +59,7 @@ All classification is driven by `tag-schema.json`:
   "energy": ["light", "dense", "obsessive"],
   "state": ["seed", "sprout", "paused", "returned"]
 }
-
+```
 
 ⸻
 
