@@ -1,99 +1,85 @@
-# Obsidian Chcuk
+# Local AI Vault
 
-**Obsidian Chuck** is an **offline-first** AI assistant and vault manager plugin for Obsidian. It performs intelligent context tagging, semantic search, and basic reasoning using only local computation. No APIs. No cloud. No setup.
+**Local AI Vault** is a 100% offline, Obsidian-exclusive AI assistant for intelligent note organization, tagging, and semantic search — with zero API usage, no setup, and full data privacy.
+
+---
+
+## Offline-Only by Design
+
+- No OpenAI, no internet calls
+- No keys, accounts, or network access
+- All embeddings and search happen locally in your vault
 
 ---
 
 ## Features
 
-- **Offline-Only AI Reasoning**
-  - Embeds and summarizes notes using local vectorization.
-  - Tags notes using customizable semantic schema (intent, emotion, energy, state).
+- **Smart Semantic Tagging**  
+  Dynamically infers tags based on the content of each note using local similarity-based classification.
 
-- **Contextual Command Assistant**
-  - Natural language queries and commands via in-app modal.
-  - Example: _"Summarize all anxious drafts from this week."_
+- **Vector-Based Semantic Search**  
+  Search your notes by meaning, not keywords, using a cosine similarity search on local hash embeddings.
 
-- **Vault Intelligence**
-  - Classifies, tags, and organizes notes in-memory.
-  - Processes all markdown files across your vault.
-  - Cosine similarity–based local semantic search.
+- **Interactive Tag Suggestion Modal**  
+  Ask the plugin to suggest tags for a note, confirm or adjust them interactively, and apply directly.
+
+- **Automatic Vault Embedding**  
+  All markdown files are vectorized locally. No need for pre-trained models or downloads.
+
+---
+
+## Commands
+
+- `Suggest Smart Tags`  
+  Uses your note content to suggest tags like `intent/draft`, `emotion/excited`, etc.
+
+- `Rebuild Embedding Index`  
+  Reprocesses all markdown files and updates their internal vector representations.
+
+- `Semantic Search Notes`  
+  Enter a question or topic and get back the most contextually relevant notes in your vault.
+
+---
+
+## Files & Architecture
+
+- `main.ts` — Core plugin loader
+- `embedding.ts` — Local-only hash embedding function
+- `semanticsearch.ts` — Vector storage + search engine
+- `smarttagger.ts` — Dynamic content-based tag classifier
+- `forematter.ts` — Frontmatter tag injector
+- `custommodal.ts` — Modal UI for asking and confirming tags
+- `settingstab.ts`, `plugin.css` — Plugin settings & style
+
+---
+
+## How It Works
+
+The plugin reads your note content, embeds it using a local algorithm, compares it to semantic label vectors (e.g., for tags like `state/sprout` or `emotion/anxious`), and suggests appropriate metadata.
+
+This all happens **inside Obsidian**, with no cloud models, APIs, or network usage.
+
+---
+
+## What It Doesn't Do
+
+- No OpenAI / LLMs
+- No internet connection required
+- No analytics, sync tracking, or telemetry
 
 ---
 
 ## Installation
 
-1. Clone or download this repository.
-2. Copy the contents into your obsidian/plugins/local-ai-vault/ directory.
-3. Enable **Local AI Vault** from the Obsidian **Community Plugins** tab.
+> Manual Installation:
+1. Clone or download this repo.
+2. Build with rollup or esbuild to produce main.js.
+3. Copy main.js, manifest.json, styles.css into .obsidian/plugins/local-ai-vault/.
+4. Enable the plugin in Obsidian → Community Plugins.
 
 ---
 
-## Usage
-
-### Commands
-
-- Classify Current Note`: Adds frontmatter tags based on note content.
-- Ask AI a Question`: Opens a modal to ask natural language queries.
-
-### Settings
-
-- Toggle automatic tagging behavior.
-- Customize tag schema via `tag-schema.json`.
-
----
-
-## Tag Schema
-
-All classification is driven by `tag-schema.json`:
-
-```json
-{
-  "intent": ["plan", "archive", "draft", "reference"],
-  "emotion": ["anxious", "calm", "numb", "excited"],
-  "energy": ["light", "dense", "obsessive"],
-  "state": ["seed", "sprout", "paused", "returned"]
-}
-```
-
----
-
-# FAQ
-
-Q: Does this plugin work offline?
-A: Yes. It operates 100% locally with no external calls.
-
-Q: How do I reset or clear all embeddings?
-A: Delete or modify any cached vector data or restart Obsidian with the plugin reloaded.
-
----
-
-# Troubleshooting
-
-- Nothing happens when I run a command:
-Make sure the plugin is enabled and that you have a file open.
-- Tags don’t appear:
-Ensure tag-schema.json exists and is valid JSON.
-
----
-
-# Advanced Usage
-
-- Modify tag-schema.json to reflect your personal tagging schema.
-- Integrate with hotkeys for faster modal access.
-- Combine with daily notes or canvas plugins for planning workflows.
-
----
-
-# Contributing
-
-- Fork this repo.
-- Create a branch: feature/your-feature.
-- Commit changes with clear, conventional messages.
-- Submit a pull request to main.
-
----
-
-License
+## License
 
 MIT
+
