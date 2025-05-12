@@ -16,18 +16,6 @@ export default class LocalAIVaultPlugin extends Plugin {
         await rebuildVectorStore(this.app);
       }
     });
-    
-this.addCommand({
-  id: "suggest-tags",
-  name: "Suggest Smart Tags",
-  checkCallback: (checking: boolean) => {
-    const file = this.app.workspace.getActiveFile();
-    if (file && !checking) {
-      new CustomModal(this.app, file).open();
-    }
-    return !!file;
-  }
-});
 
     this.addCommand({
       id: "semantic-search",
