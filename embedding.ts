@@ -1,38 +1,45 @@
-import { App, TFile } from "obsidian";
+import { Plugin } from "obsidian";
+import { loadVectorStore, rebuildVectorStore, semanticSearch } from "./semanticSearch";
+import { CustomModal } from "./custommodal";
+import { LocalAISettingsTab } from "./settingstab"; // Optional
 
-// Simple hashing embedding: works offline, zero dependencies
-function localHashEmbed(text: string): number[] {
-  const words = text.toLowerCase().split(/\W+/).slice(0, 100);
-  const vec = new Array(300).fill(0);
+export default class LocalAIVaultPlugin extends Plugin {
+  async onload() {
+    console.log("Loading Local AI Vault Plugin");
 
-  for (let i = 0; i < words.length; i++) {
-    for (let j = 0; j < words[i].length; j++) {
-      const index = (i * j) % 300;
-      vec[index] += words[i].charCodeAt(j);
-    }
+    await loadVectorStore(this.app);
+
+    this.addCommand({
+      id: "rebuild-embeddings",
+      name: "Rebuild Embedding Index",
+      callback: async () => {
+        await rebuildVectorStore(this.app);
+      }
+    });
+
+    this.addCommand({
+      id: "semantic-search",
+      name: "Semantic Search Notes",
+      callback: async () => {
+        const query = await this.app.prompt("Enter your search query:");
+        if (query) await semanticSearch(this.app, query);
+      }
+    });
+
+    this.addCommand({
+      id: "open-ai-modal",
+      name: "Ask Vault (Modal)",
+      callback: () => new CustomModal(this.app).open()
+    });
+
+    this.addSettingTab(new LocalAISettingsTab(this.app, this));
   }
 
-  return vec;
-}
-
-// In-memory vector store (could persist later)
-const vectorStore: Record<string, number[]> = {};
-
-export async function processVaultEmbeddings(app: App) {
-  const files = app.vault.getMarkdownFiles();
-
-  for (const file of files) {
-    const content = await app.vault.read(file);
-    const embedding = localHashEmbed(content.slice(0, 1000));
-
-    vectorStore[file.path] = embedding;
-    console.log(`Embedded: ${file.path}`);
+  onunload() {
+    console.log("Unloading Local AI Vault Plugin");
   }
 }
-
-export function cosineSimilarity(vecA: number[], vecB: number[]): number {
-  const dot = vecA.reduce((sum, val, i) => sum + val * vecB[i], 0);
-  const magA = Math.sqrt(vecA.reduce((sum, val) => sum + val * val, 0));
+val * val, 0));
   const magB = Math.sqrt(vecB.reduce((sum, val) => sum + val * val, 0));
   return dot / (magA * magB);
 }
