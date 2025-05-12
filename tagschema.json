@@ -1,0 +1,6 @@
+{
+  "intent": ["plan", "archive", "draft", "reference"],
+  "emotion": ["anxious", "calm", "numb", "excited"],
+  "energy": ["light", "dense", "obsessive"],
+  "state": ["seed", "sprout", "paused", "returned"]
+}
