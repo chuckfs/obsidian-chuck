@@ -54,6 +54,7 @@ All classification is driven by `tag-schema.json`:
   "energy": ["light", "dense", "obsessive"],
   "state": ["seed", "sprout", "paused", "returned"]
 }
+'''
 
 ---
 
@@ -65,6 +66,8 @@ A: Yes. It operates 100% locally with no external calls.
 **Q: How do I reset or clear all embeddings?**  
 A: Delete or modify `meta.json` entries or restart with the cache cleared.
 
+---
+
 ## Troubleshooting
 
 - **Nothing happens when I run a command:**  
@@ -73,11 +76,15 @@ A: Delete or modify `meta.json` entries or restart with the cache cleared.
 - **Tags don’t appear:**  
   Ensure `tag-schema.json` is present and valid JSON.
   
+---
+  
   ## Advanced Usage
 
 - Modify `tag-schema.json` to reflect your personal ontology.
 - Integrate with hotkeys for faster modal access.
 - Use in combination with daily notes or canvas plugins for workflows.
+
+---
 
 # Contributing
 
