@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "outDir": "."
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true
   },
-  "include": ["main.ts", "embedding.ts", "semanticsearch.ts", "smarttagger.ts", "forematter.ts", "custommodal.ts", "settingstab.ts", "commands.ts"]
+  "include": ["*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
