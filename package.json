@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Offline-only AI assistant plugin for Obsidian",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w"
