@@ -1,8 +1,8 @@
 import { App, TFile, Notice, normalizePath } from "obsidian";
 import { cosineSimilarity } from "./embedding";
 
-// Local in-memory store (loaded/saved from disk)
-let vectorStore: Record<string, number[]> = {};
+// Shared vector store
+export let vectorStore: Record<string, number[]> = {};
 const VECTOR_STORE_FILE = ".local-ai-vault-vectors.json";
 
 function localHashEmbed(text: string): number[] {
@@ -72,6 +72,10 @@ export async function semanticSearch(app: App, query: string) {
     new Notice("No matching documents found.");
     return;
   }
+
+  const lines = results.map((r, i) => `${i + 1}. ${r.path} (score: ${r.score.toFixed(3)})`);
+  new Notice("Top matches:\n" + lines.join("\n"));
+}
 
   const lines = results.map((r, i) => `${i + 1}. ${r.path} (score: ${r.score.toFixed(3)})`);
   new Notice("Top matches:\n" + lines.join("\n"));
