@@ -1,45 +1,40 @@
-import { Plugin } from "obsidian";
-import { loadVectorStore, rebuildVectorStore, semanticSearch } from "./semanticSearch";
-import { CustomModal } from "./custommodal";
-import { LocalAISettingsTab } from "./settingstab"; // Optional
+import { App, TFile } from "obsidian";
 
-export default class LocalAIVaultPlugin extends Plugin {
-  async onload() {
-    console.log("Loading Local AI Vault Plugin");
+// Simple hashing embedding: works offline, zero dependencies
+export function localHashEmbed(text: string): number[] {
+  const words = text.toLowerCase().split(/\W+/).slice(0, 100);
+  const vec = new Array(300).fill(0);
 
-    await loadVectorStore(this.app);
-
-    this.addCommand({
-      id: "rebuild-embeddings",
-      name: "Rebuild Embedding Index",
-      callback: async () => {
-        await rebuildVectorStore(this.app);
-      }
-    });
-
-    this.addCommand({
-      id: "semantic-search",
-      name: "Semantic Search Notes",
-      callback: async () => {
-        const query = await this.app.prompt("Enter your search query:");
-        if (query) await semanticSearch(this.app, query);
-      }
-    });
-
-    this.addCommand({
-      id: "open-ai-modal",
-      name: "Ask Vault (Modal)",
-      callback: () => new CustomModal(this.app).open()
-    });
-
-    this.addSettingTab(new LocalAISettingsTab(this.app, this));
+  for (let i = 0; i < words.length; i++) {
+    for (let j = 0; j < words[i].length; j++) {
+      const index = (i * j) % 300;
+      vec[index] += words[i].charCodeAt(j);
+    }
   }
 
-  onunload() {
-    console.log("Unloading Local AI Vault Plugin");
+  return vec;
+}
+
+// In-memory vector store (used for temporary caching if needed)
+const vectorStore: Record<string, number[]> = {};
+
+export async function processVaultEmbeddings(app: App) {
+  const files = app.vault.getMarkdownFiles();
+
+  for (const file of files) {
+    const content = await app.vault.read(file);
+    const embedding = localHashEmbed(content.slice(0, 1000));
+    vectorStore[file.path] = embedding;
+    console.log(`Embedded: ${file.path}`);
   }
 }
-val * val, 0));
+
+// Standard cosine similarity
+export function cosineSimilarity(vecA: number[], vecB: number[]): number {
+  const dot = vecA.reduce((sum, val, i) => sum + val * vecB[i], 0);
+  const magA = Math.sqrt(vecA.reduce((sum, val) => sum + val * val, 0));
   const magB = Math.sqrt(vecB.reduce((sum, val) => sum + val * val, 0));
+
+  if (magA === 0 || magB === 0) return 0;
   return dot / (magA * magB);
 }
