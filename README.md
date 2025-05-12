@@ -1,8 +1,3 @@
-Here is the fully copy-paste ready README.md with all formatting issues fixed:
-
-⸻
-
-
 # Local AI Vault
 
 **Local AI Vault** is an **offline-first** AI assistant and vault manager plugin for Obsidian. It performs intelligent context tagging, semantic search, and basic reasoning using only local computation. No APIs. No cloud. No setup.
@@ -13,7 +8,7 @@ Here is the fully copy-paste ready README.md with all formatting issues fixed:
 
 - **Offline-Only AI Reasoning**
   - Embeds and summarizes notes using local vectorization.
-  - Tags notes using customizable semantic schema (`intent`, `emotion`, `energy`, `state`).
+  - Tags notes using customizable semantic schema (intent, emotion, energy, state).
 
 - **Contextual Command Assistant**
   - Natural language queries and commands via in-app modal.
@@ -29,7 +24,7 @@ Here is the fully copy-paste ready README.md with all formatting issues fixed:
 ## Installation
 
 1. Clone or download this repository.
-2. Copy the contents into your `.obsidian/plugins/local-ai-vault/` directory.
+2. Copy the contents into your obsidian/plugins/local-ai-vault/ directory.
 3. Enable **Local AI Vault** from the Obsidian **Community Plugins** tab.
 
 ---
@@ -38,8 +33,8 @@ Here is the fully copy-paste ready README.md with all formatting issues fixed:
 
 ### Commands
 
-- `Classify Current Note`: Adds frontmatter tags based on note content.
-- `Ask AI a Question`: Opens a modal to ask natural language queries.
+- Classify Current Note`: Adds frontmatter tags based on note content.
+- Ask AI a Question`: Opens a modal to ask natural language queries.
 
 ### Settings
 
