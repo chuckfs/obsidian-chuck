@@ -1,15 +1,14 @@
 import { Plugin } from "obsidian";
 import { loadVectorStore, rebuildVectorStore, semanticSearch } from "./semanticSearch";
-import { LocalAISettingsTab } from "./settingstab"; // Optional: remove if not needed
+import { CustomModal } from "./custommodal";
+import { LocalAISettingsTab } from "./settingstab"; // Optional
 
 export default class LocalAIVaultPlugin extends Plugin {
   async onload() {
     console.log("Loading Local AI Vault Plugin");
 
-    // Load vector index from vault
     await loadVectorStore(this.app);
 
-    // Register command: Rebuild the embedding index
     this.addCommand({
       id: "rebuild-embeddings",
       name: "Rebuild Embedding Index",
@@ -18,7 +17,6 @@ export default class LocalAIVaultPlugin extends Plugin {
       }
     });
 
-    // Register command: Semantic search
     this.addCommand({
       id: "semantic-search",
       name: "Semantic Search Notes",
@@ -28,7 +26,12 @@ export default class LocalAIVaultPlugin extends Plugin {
       }
     });
 
-    // Optional settings tab
+    this.addCommand({
+      id: "open-ai-modal",
+      name: "Ask Vault (Modal)",
+      callback: () => new CustomModal(this.app).open()
+    });
+
     this.addSettingTab(new LocalAISettingsTab(this.app, this));
   }
 
