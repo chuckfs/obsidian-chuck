@@ -1,8 +1,8 @@
-import { TFile, App } from "obsidian";
-import tagSchema from "./tag-schema.json";
+import { App, TFile } from "obsidian";
+import { suggestTagsForFile } from "./smartTagger";
 import yaml from "js-yaml";
 
-// Helper to parse frontmatter from file text
+// Helper to parse frontmatter
 function parseFrontmatter(content: string): { frontmatter: any, body: string } {
   if (!content.startsWith("---")) return { frontmatter: {}, body: content };
 
@@ -14,20 +14,16 @@ function parseFrontmatter(content: string): { frontmatter: any, body: string } {
   return { frontmatter: yaml.load(front) || {}, body };
 }
 
-// Classify and inject tags into YAML frontmatter
+// Inject new tags into frontmatter
 export async function classifyAndTag(app: App, file: TFile) {
   const raw = await app.vault.read(file);
   const { frontmatter, body } = parseFrontmatter(raw);
 
-  const contentLower = raw.toLowerCase();
   const newTags = new Set<string>(frontmatter?.tags ?? []);
+  const suggestions = await suggestTagsForFile(app, file);
 
-  for (const [category, values] of Object.entries(tagSchema)) {
-    for (const tag of values) {
-      if (contentLower.includes(tag)) {
-        newTags.add(`${category}/${tag}`);
-      }
-    }
+  for (const tag of suggestions) {
+    newTags.add(tag);
   }
 
   const updatedFront = yaml.dump({ ...frontmatter, tags: Array.from(newTags) });
@@ -35,3 +31,4 @@ export async function classifyAndTag(app: App, file: TFile) {
 
   await app.vault.modify(file, updated);
 }
+
