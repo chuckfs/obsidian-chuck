@@ -55,6 +55,8 @@ All classification is driven by `tag-schema.json`:
   "state": ["seed", "sprout", "paused", "returned"]
 }
 
+---
+
 ## FAQ
 
 **Q: Does this plugin work offline?**  
