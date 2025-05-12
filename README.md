@@ -61,7 +61,7 @@ All classification is driven by `tag-schema.json`:
 }
 ```
 
-⸻
+---
 
 FAQ
 
@@ -71,7 +71,7 @@ A: Yes. It operates 100% locally with no external calls.
 Q: How do I reset or clear all embeddings?
 A: Delete or modify any cached vector data or restart Obsidian with the plugin reloaded.
 
-⸻
+---
 
 Troubleshooting
 	•	Nothing happens when I run a command:
@@ -79,14 +79,14 @@ Make sure the plugin is enabled and that you have a file open.
 	•	Tags don’t appear:
 Ensure tag-schema.json exists and is valid JSON.
 
-⸻
+---
 
 Advanced Usage
 	•	Modify tag-schema.json to reflect your personal tagging schema.
 	•	Integrate with hotkeys for faster modal access.
 	•	Combine with daily notes or canvas plugins for planning workflows.
 
-⸻
+---
 
 Contributing
 	1.	Fork this repo.
@@ -96,7 +96,7 @@ Contributing
 
 Use formatter.test.ts as a reference for feature testing and validation.
 
-⸻
+---
 
 License
 
