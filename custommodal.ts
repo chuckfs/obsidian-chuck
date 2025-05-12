@@ -1,46 +1,75 @@
-import { App, Modal, TextComponent, ButtonComponent } from "obsidian";
-import { localHashEmbed, cosineSimilarity } from "./embedding";
-import { vectorStore, loadVectorStore } from "./semanticSearch";
+import { App, Modal, ButtonComponent, Setting } from "obsidian";
+import { TFile } from "obsidian";
+import { suggestTagsForFile } from "./smartTagger";
+import { classifyAndTag } from "./forematter";
 
 export class CustomModal extends Modal {
+  private file: TFile;
+
+  constructor(app: App, file: TFile) {
+    super(app);
+    this.file = file;
+  }
+
   async onOpen() {
     const { contentEl } = this;
-    contentEl.createEl("h2", { text: "Ask your vault:" });
+    contentEl.empty();
+    contentEl.createEl("h2", { text: "Suggested Tags for This Note" });
 
-    const input = new TextComponent(contentEl);
-    input.inputEl.style.width = "100%";
+    const tags = await suggestTagsForFile(this.app, this.file);
+    const selectedTags = new Set(tags);
 
-    const resultContainer = contentEl.createDiv();
+    if (tags.length === 0) {
+      contentEl.createEl("p", { text: "No strong tag suggestions found." });
+      return;
+    }
 
-    await loadVectorStore(this.app);
+    tags.forEach(tag => {
+      new Setting(contentEl)
+        .setName(tag)
+        .addToggle(toggle =>
+          toggle.setValue(true).onChange(value => {
+            if (value) selectedTags.add(tag);
+            else selectedTags.delete(tag);
+          })
+        );
+    });
 
     new ButtonComponent(contentEl)
-      .setButtonText("Ask")
+      .setButtonText("Apply Tags")
+      .setCta()
       .onClick(async () => {
-        const query = input.getValue();
-        const queryVec = localHashEmbed(query);
-
-        const results = Object.entries(vectorStore)
-          .map(([path, vec]) => ({
-            path,
-            score: cosineSimilarity(queryVec, vec),
-          }))
-          .sort((a, b) => b.score - a.score)
-          .slice(0, 5);
-
-        resultContainer.empty();
-        resultContainer.createEl("h4", { text: "Top Matches:" });
-
-        results.forEach((res, i) => {
-          resultContainer.createEl("div", {
-            text: `${i + 1}. ${res.path} (${res.score.toFixed(3)})`,
-          });
-        });
+        await this.applySelectedTags(Array.from(selectedTags));
+        this.close();
       });
+
+    new ButtonComponent(contentEl)
+      .setButtonText("Cancel")
+      .onClick(() => this.close());
+  }
+
+  async applySelectedTags(tags: string[]) {
+    const content = await this.app.vault.read(this.file);
+    const updated = await this.injectTags(content, tags);
+    await this.app.vault.modify(this.file, updated);
+  }
+
+  async injectTags(content: string, tags: string[]): Promise<string> {
+    const frontTag = `tags: [${tags.join(", ")}]`;
+
+    if (content.startsWith("---")) {
+      const end = content.indexOf("---", 3);
+      const front = content.slice(0, end + 3);
+      const body = content.slice(end + 3).trimStart();
+
+      const newFront = front.replace(/tags:\s*\[.*?\]/, frontTag) || `${front}\n${frontTag}`;
+      return `${newFront}\n\n${body}`;
+    }
+
+    return `---\n${frontTag}\n---\n\n${content}`;
   }
 
   onClose() {
-    const { contentEl } = this;
-    contentEl.empty();
+    this.contentEl.empty();
   }
 }
