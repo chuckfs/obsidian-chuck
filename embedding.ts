@@ -1,6 +1,6 @@
 import { App, TFile } from "obsidian";
 
-
+// Character trigram-based hash embedding — meaningfully varied per file
 export function localHashEmbed(text: string): number[] {
   const vec = new Array(256).fill(0);
   const normalized = text.toLowerCase().replace(/[^a-z0-9]/g, ' ');
@@ -10,6 +10,32 @@ export function localHashEmbed(text: string): number[] {
     const hash = tri.split('').reduce((sum, c, j) => sum + c.charCodeAt(0) * (j + 1), 0);
     vec[hash % 256]++;
   }
+
+  return vec;
+}
+
+export function cosineSimilarity(vecA: number[], vecB: number[]): number {
+  const dot = vecA.reduce((sum, val, i) => sum + val * vecB[i], 0);
+  const magA = Math.sqrt(vecA.reduce((sum, val) => sum + val * val, 0));
+  const magB = Math.sqrt(vecB.reduce((sum, val) => sum + val * val, 0));
+
+  if (magA === 0 || magB === 0) return 0;
+  return dot / (magA * magB);
+}
+
+// Optional: temporary in-memory vector storage (if you use it)
+const vectorStore: Record<string, number[]> = {};
+
+export async function processVaultEmbeddings(app: App) {
+  const files = app.vault.getMarkdownFiles();
+  for (const file of files) {
+    const content = await app.vault.read(file);
+    const embedding = localHashEmbed(content.slice(0, 1000));
+    vectorStore[file.path] = embedding;
+    console.log(`Embedded: ${file.path}`);
+  }
+}
+
 
   return vec;
 }
