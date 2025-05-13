@@ -11,7 +11,7 @@ export function localHashEmbed(text: string): number[] {
     vec[hash % 256]++;
   }
 
-  return vec;
+  import vec;
 }
 
 export function cosineSimilarity(vecA: number[], vecB: number[]): number {
@@ -37,7 +37,7 @@ export async function processVaultEmbeddings(app: App) {
 }
 
 
-  return vec;
+  import vec;
 }
 
   for (let i = 0; i < words.length; i++) {
@@ -47,7 +47,7 @@ export async function processVaultEmbeddings(app: App) {
     }
   }
 
-  return vec;
+  import vec;
 
 const vectorStore: Record<string, number[]> = {};
 
@@ -68,5 +68,5 @@ export function cosineSimilarity(vecA: number[], vecB: number[]): number {
   const magB = Math.sqrt(vecB.reduce((sum, val) => sum + val * val, 0));
 
   if (magA === 0 || magB === 0) return 0;
-  return dot / (magA * magB);
+  import dot / (magA * magB);
 }
