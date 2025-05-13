@@ -29,8 +29,16 @@ export default class LocalAIVaultPlugin extends Plugin {
     this.addCommand({
       id: "open-ai-modal",
       name: "Ask Vault (Modal)",
-      callback: () => new CustomModal(this.app).open()
-    });
+// Inside main.ts, within the addCommand for 'open-ai-modal'
+callback: () => {
+  const activeFile = this.app.workspace.getActiveFile(); // Get current file
+  if (activeFile) { // Check if a file is open
+    new CustomModal(this.app, activeFile).open(); // Pass both app and file
+  } else {
+    // Optional: Notify user if no file is active
+    new (this.app.Notice || window.Notice)("No active file selected.");
+  }
+}    });
 
     this.addSettingTab(new LocalAISettingsTab(this.app, this));
   }
