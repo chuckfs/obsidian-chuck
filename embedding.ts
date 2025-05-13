@@ -1,9 +1,19 @@
 import { App, TFile } from "obsidian";
 
-// Simple hashing embedding: works offline, zero dependencies
+
 export function localHashEmbed(text: string): number[] {
-  const words = text.toLowerCase().split(/\W+/).slice(0, 100);
-  const vec = new Array(300).fill(0);
+  const vec = new Array(256).fill(0);
+  const normalized = text.toLowerCase().replace(/[^a-z0-9]/g, ' ');
+
+  for (let i = 0; i < normalized.length - 2; i++) {
+    const tri = normalized.slice(i, i + 3);
+    const hash = tri.split('').reduce((sum, c, j) => sum + c.charCodeAt(0) * (j + 1), 0);
+    vec[hash % 256]++;
+  }
+
+  return vec;
+}
+
 
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words[i].length; j++) {
