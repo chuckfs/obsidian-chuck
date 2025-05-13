@@ -24,7 +24,7 @@ export default class ChuckPlugin extends Plugin {
   callback: async () => {
     const file = this.app.workspace.getActiveFile();
     if (file) {
-      new CustomModal(this.app, file).open(); // ✅ Correct usage
+      new CustomModal(this.app, file).open();
     } else {
       new Notice("No active file selected.");
     }
@@ -32,18 +32,19 @@ export default class ChuckPlugin extends Plugin {
 });
 
 
-    this.addCommand({
-      id: "open-ai-modal",
-      name: "Ask Vault (Modal)",
-      callback: () => {
-        const file = this.app.workspace.getActiveFile();
-        if (file) {
-          new CustomModal(this.app, () => {}).open();
-        } else {
-          new Notice("No active file selected.");
-        }
-      }
-    });
+ this.addCommand({
+  id: "manual-tag-modal",
+  name: "Tag Note with Suggested Labels",
+  callback: () => {
+    const file = this.app.workspace.getActiveFile();
+    if (file) {
+      new CustomModal(this.app, file).open();
+    } else {
+      new Notice("No active file selected.");
+    }
+  }
+});
+
 
     this.addSettingTab(new LocalAISettingsTab(this.app, this));
   }
