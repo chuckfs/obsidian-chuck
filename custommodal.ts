@@ -1,7 +1,5 @@
-import { App, Modal, ButtonComponent, Setting } from "obsidian";
-import { TFile } from "obsidian";
+import { App, Modal, ButtonComponent, Setting, TFile } from "obsidian";
 import { suggestTagsForFile } from "./smarttagger";
-import { classifyAndTag } from "./forematter";
 
 export class CustomModal extends Modal {
   private file: TFile;
@@ -40,12 +38,12 @@ export class CustomModal extends Modal {
       .setCta()
       .onClick(async () => {
         await this.applySelectedTags(Array.from(selectedTags));
-        this.onClose()();
+        this.close(); // ✅ Correct usage
       });
 
     new ButtonComponent(contentEl)
       .setButtonText("Cancel")
-      .onClick(() => this.onClose()());
+      .onClick(() => this.close()); // ✅ Correct usage
   }
 
   async applySelectedTags(tags: string[]) {
