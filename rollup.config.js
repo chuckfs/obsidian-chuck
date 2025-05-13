@@ -6,16 +6,10 @@ export default {
   input: 'main.ts',
   output: {
     dir: '.',
-    sourcemap: false,
     format: 'cjs',
-    exports: 'default',
-    entryFileNames: 'main.js',
-    sourcemap: true // Enable source maps
+    sourcemap: true,
+    entryFileNames: 'main.js'
   },
   external: ['obsidian'],
-  plugins: [
-    typescript(),
-    nodeResolve({ browser: true }),
-    commonjs()
-  ]
+  plugins: [typescript(), nodeResolve(), commonjs()]
 };
