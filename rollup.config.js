@@ -10,6 +10,7 @@ export default {
     format: 'cjs',
     exports: 'default',
     entryFileNames: 'main.js',
+    sourcemap: true // Enable source maps
   },
   external: ['obsidian'],
   plugins: [
