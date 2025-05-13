@@ -1,0 +1,28 @@
+name: Auto-Stamp and Protect Repo
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  protect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install fs-extra
+
+      - name: Ensure Required Files Exist
+        run: node .github/scripts/ensure-required-files.js
+
+      - name: Prepend Code Headers
+        run: node .github/scripts/prepend-code-header.js
