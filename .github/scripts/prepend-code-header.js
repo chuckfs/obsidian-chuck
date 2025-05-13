@@ -2,7 +2,6 @@ import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Define __filename and __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -37,5 +36,3 @@ async function prependHeader() {
 
 prependHeader();
 }
-
-prependHeader();
