@@ -1,85 +1,78 @@
-# Local AI Vault
+# Chuck — Offline AI Vault Manager for Obsidian
 
-**Local AI Vault** is a 100% offline, Obsidian-exclusive AI assistant for intelligent note organization, tagging, and semantic search — with zero API usage, no setup, and full data privacy.
-
----
-
-## Offline-Only by Design
-
-- No OpenAI, no internet calls
-- No keys, accounts, or network access
-- All embeddings and search happen locally in your vault
+**Chuck** is a 100% offline AI assistant for intelligent note tagging, semantic search, and vector organization — built exclusively for Obsidian. No APIs. No cloud. Just your vault.
 
 ---
 
-## Features
+## 🔒 Offline-Only by Design
+
+- ✅ No OpenAI or internet calls
+- ✅ No API keys or cloud accounts
+- ✅ All processing and embeddings happen locally
+
+---
+
+## ✨ Features
 
 - **Smart Semantic Tagging**  
-  Dynamically infers tags based on the content of each note using local similarity-based classification.
+  Suggests tags like `intent/draft` or `emotion/excited` by analyzing note content using local embeddings.
 
 - **Vector-Based Semantic Search**  
-  Search your notes by meaning, not keywords, using a cosine similarity search on local hash embeddings.
+  Find notes by meaning, not keywords. Uses cosine similarity search over embedded content.
 
-- **Interactive Tag Suggestion Modal**  
-  Ask the plugin to suggest tags for a note, confirm or adjust them interactively, and apply directly.
+- **Interactive Tag Modal**  
+  Lets you confirm and apply suggested tags via a modal UI.
 
 - **Automatic Vault Embedding**  
-  All markdown files are vectorized locally. No need for pre-trained models or downloads.
+  All notes are embedded on demand — no pretraining or internet required.
 
 ---
 
-## Commands
+## ⚙️ Plugin Commands
 
-- `Suggest Smart Tags`  
-  Uses your note content to suggest tags like `intent/draft`, `emotion/excited`, etc.
+- `Tag Note with Suggested Labels`  
+  Interactive modal for approving and applying tag suggestions to the active note.
 
 - `Rebuild Embedding Index`  
-  Reprocesses all markdown files and updates their internal vector representations.
+  Reprocesses all markdown files and refreshes vector data.
 
 - `Semantic Search Notes`  
-  Enter a question or topic and get back the most contextually relevant notes in your vault.
+  Uses your query to retrieve the most semantically related notes.
 
 ---
 
-## Files & Architecture
+## 🧠 Architecture
 
-- `main.ts` — Core plugin loader
-- `embedding.ts` — Local-only hash embedding function
-- `semanticsearch.ts` — Vector storage + search engine
-- `smarttagger.ts` — Dynamic content-based tag classifier
-- `forematter.ts` — Frontmatter tag injector
-- `custommodal.ts` — Modal UI for asking and confirming tags
-- `settingstab.ts`, `plugin.css` — Plugin settings & style
-
----
-
-## How It Works
-
-The plugin reads your note content, embeds it using a local algorithm, compares it to semantic label vectors (e.g., for tags like `state/sprout` or `emotion/anxious`), and suggests appropriate metadata.
-
-This all happens **inside Obsidian**, with no cloud models, APIs, or network usage.
+- `main.ts` — Plugin entrypoint and command registration  
+- `embedding.ts` — Local hashing and embedding  
+- `semanticsearch.ts` — In-memory vector store and similarity search  
+- `smarttagger.ts` — Content-based tag classifier  
+- `forematter.ts` — Frontmatter reader/injector  
+- `custommodal.ts` — Interactive UI for tag confirmation  
+- `settingstab.ts` — Optional plugin settings tab  
+- `plugin.css` — Minimal UI styles
 
 ---
 
-## What It Doesn't Do
+## 🛠 How It Works
 
-- No OpenAI / LLMs
-- No internet connection required
-- No analytics, sync tracking, or telemetry
-
----
-
-## Installation
-
-> Manual Installation:
-1. Clone or download this repo.
-2. Build with rollup or esbuild to produce main.js.
-3. Copy main.js, manifest.json, styles.css into .obsidian/plugins/local-ai-vault/.
-4. Enable the plugin in Obsidian → Community Plugins.
+1. Chuck reads the active note content.
+2. It generates a vector using local hash embeddings.
+3. It compares this vector to semantic label vectors for tags like:
+   - `intent/draft`, `state/seed`, `emotion/calm`, etc.
+4. It suggests relevant tags with confidence scores.
+5. You can confirm or reject them interactively.
 
 ---
 
-## License
+## 🚫 No Cloud Dependency
 
-MIT
+Chuck is completely self-contained. It never sends your notes outside Obsidian or requires internet access.
 
+---
+
+## 🔧 Local Development
+
+```bash
+npm install
+npm run build
