@@ -18,17 +18,19 @@ export default class ChuckPlugin extends Plugin {
       }
     });
 
-    this.addCommand({
-      id: "semantic-search",
-      name: "Semantic Search Notes",
-      callback: async () => {
-        new CustomModal(this.app, async (query) => {
-          if (query) {
-            await semanticSearch(this.app, query);
-          }
-        }).open();
-      }
-    });
+  this.addCommand({
+  id: "semantic-search",
+  name: "Semantic Search Notes",
+  callback: async () => {
+    const file = this.app.workspace.getActiveFile();
+    if (file) {
+      new CustomModal(this.app, file).open(); // ✅ Correct usage
+    } else {
+      new Notice("No active file selected.");
+    }
+  }
+});
+
 
     this.addCommand({
       id: "open-ai-modal",
