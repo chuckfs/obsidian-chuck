@@ -1,11 +1,11 @@
-import { Plugin } from "obsidian";
+import { Plugin, Notice } from "obsidian";
 import { loadVectorStore, rebuildVectorStore, semanticSearch } from "./semanticsearch";
 import { CustomModal } from "./custommodal";
-import { LocalAISettingsTab } from "./settingstab"; // Optional
+import { LocalAISettingsTab } from "./settingstab";
 
-export default class LocalAIVaultPlugin extends Plugin {
+export default class ChuckPlugin extends Plugin {
   async onload() {
-    console.log("Loading Local AI Vault Plugin");
+    console.log("Loading Chuck - Offline AI Plugin");
 
     await loadVectorStore(this.app);
 
@@ -14,6 +14,7 @@ export default class LocalAIVaultPlugin extends Plugin {
       name: "Rebuild Embedding Index",
       callback: async () => {
         await rebuildVectorStore(this.app);
+        new Notice("Embeddings rebuilt.");
       }
     });
 
@@ -21,29 +22,31 @@ export default class LocalAIVaultPlugin extends Plugin {
       id: "semantic-search",
       name: "Semantic Search Notes",
       callback: async () => {
-        const query = await this.app.prompt("Enter your search query:");
-        if (query) await semanticSearch(this.app, query);
+        new CustomModal(this.app, async (query) => {
+          if (query) {
+            await semanticSearch(this.app, query);
+          }
+        }).open();
       }
     });
 
     this.addCommand({
       id: "open-ai-modal",
       name: "Ask Vault (Modal)",
-// Inside main.ts, within the addCommand for 'open-ai-modal'
-callback: () => {
-  const activeFile = this.app.workspace.getActiveFile(); // Get current file
-  if (activeFile) { // Check if a file is open
-    new CustomModal(this.app, activeFile).open(); // Pass both app and file
-  } else {
-    // Optional: Notify user if no file is active
-    new (this.app.Notice || window.Notice)("No active file selected.");
-  }
-}    });
+      callback: () => {
+        const file = this.app.workspace.getActiveFile();
+        if (file) {
+          new CustomModal(this.app, () => {}).open();
+        } else {
+          new Notice("No active file selected.");
+        }
+      }
+    });
 
     this.addSettingTab(new LocalAISettingsTab(this.app, this));
   }
 
   onunload() {
-    console.log("Unloading Local AI Vault Plugin");
+    console.log("Unloading Chuck Plugin");
   }
 }
