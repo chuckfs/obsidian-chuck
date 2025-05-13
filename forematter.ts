@@ -31,4 +31,3 @@ export async function classifyAndTag(app: App, file: TFile) {
 
   await app.vault.modify(file, updated);
 }
-
