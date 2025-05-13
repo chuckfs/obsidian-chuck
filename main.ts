@@ -1,5 +1,5 @@
 import { Plugin } from "obsidian";
-import { loadVectorStore, rebuildVectorStore, semanticSearch } from "./semanticSearch";
+import { loadVectorStore, rebuildVectorStore, semanticSearch } from "./semanticsearch";
 import { CustomModal } from "./custommodal";
 import { LocalAISettingsTab } from "./settingstab"; // Optional
 
