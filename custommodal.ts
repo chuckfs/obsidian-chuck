@@ -40,12 +40,12 @@ export class CustomModal extends Modal {
       .setCta()
       .onClick(async () => {
         await this.applySelectedTags(Array.from(selectedTags));
-        this.close();
+        this.onClose()();
       });
 
     new ButtonComponent(contentEl)
       .setButtonText("Cancel")
-      .onClick(() => this.close());
+      .onClick(() => this.onClose()());
   }
 
   async applySelectedTags(tags: string[]) {
