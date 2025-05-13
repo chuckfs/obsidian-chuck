@@ -1,24 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
-    "lib": ["es2020", "dom"],
-    "allowJs": true,
-    "checkJs": false,
-    "jsx": "react",
-    "declaration": true,
-    "sourceMap": true,
-    "outDir": ".",
+    "types": ["obsidian"],
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["./**/*.ts"],
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "include": ["**/*.ts"]
 }
