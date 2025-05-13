@@ -15,6 +15,10 @@ export function registerAssistantCommands(plugin: Plugin) {
   plugin.addCommand({
     id: "ai-query",
     name: "Ask AI a Question",
-    callback: () => new CustomModal(plugin.app).open(),
-  });
+const activeFile = plugin.app.workspace.getActiveFile();
+if (activeFile) {
+    callback: () => new CustomModal(plugin.app, activeFile).open();
+} else {
+    new Notice("No active file selected.");
+}  });
 }
