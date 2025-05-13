@@ -1,8 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const headerPath = path.join(__dirname, '../templates/CODE_HEADER.txt');
-const extensions = ['.cpp', '.py', '.sh', '.js'];
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const templatesPath = path.join(__dirname, '../templates');
 
 async function prependHeader() {
   const header = await fs.readFile(headerPath, 'utf8');
