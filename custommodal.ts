@@ -1,6 +1,6 @@
 import { App, Modal, ButtonComponent, Setting } from "obsidian";
 import { TFile } from "obsidian";
-import { suggestTagsForFile } from "./smartTagger";
+import { suggestTagsForFile } from "./smarttagger";
 import { classifyAndTag } from "./forematter";
 
 export class CustomModal extends Modal {
