@@ -14,7 +14,6 @@ export function localHashEmbed(text: string): number[] {
   return vec;
 }
 
-
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words[i].length; j++) {
       const index = (i * j) % 300;
