@@ -1,6 +1,6 @@
 import { Plugin } from "obsidian";
 import { CustomModal } from "./custommodal";
-import { classifyAndTag } from "./formatter";
+import { classifyAndTag } from "./forematter";
 
 export function registerAssistantCommands(plugin: Plugin) {
   plugin.addCommand({
