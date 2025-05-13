@@ -2,9 +2,12 @@ import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// Define __filename and __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const templatesPath = path.join(__dirname, '../templates');
+
+const headerPath = path.join(__dirname, '../templates/CODE_HEADER.txt');
+const extensions = ['.cpp', '.py', '.sh', '.js'];
 
 async function prependHeader() {
   const header = await fs.readFile(headerPath, 'utf8');
@@ -30,6 +33,9 @@ async function prependHeader() {
   };
 
   await walk(process.cwd());
+}
+
+prependHeader();
 }
 
 prependHeader();
