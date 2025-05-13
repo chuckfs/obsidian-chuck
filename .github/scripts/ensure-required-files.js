@@ -1,4 +1,4 @@
-const fs = import('fs-extra');
+import fs from 'fs-extra';
 const path = require('path');
 
 const filesToEnsure = ['LICENSE.md', 'README.md', 'PUBLIC_DISCLOSURE.md'];
