@@ -2,7 +2,8 @@ import fs from 'fs-extra';
 import path from 'path';
 
 const filesToEnsure = ['LICENSE.md', 'README.md', 'PUBLIC_DISCLOSURE.md'];
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const templatesPath = path.join(new URL('.', import.meta.url).pathname, '../templates');
+
 async function ensureFiles() {
   for (const filename of filesToEnsure) {
     const filePath = path.join(process.cwd(), filename);
