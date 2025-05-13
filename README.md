@@ -4,15 +4,15 @@
 
 ---
 
-## 🔒 Offline-Only by Design
+## Offline-Only by Design
 
-- ✅ No OpenAI or internet calls
-- ✅ No API keys or cloud accounts
-- ✅ All processing and embeddings happen locally
+- No OpenAI or internet calls
+- No API keys or cloud accounts
+- All processing and embeddings happen locally
 
 ---
 
-## ✨ Features
+## Features
 
 - **Smart Semantic Tagging**  
   Suggests tags like `intent/draft` or `emotion/excited` by analyzing note content using local embeddings.
@@ -28,7 +28,7 @@
 
 ---
 
-## ⚙️ Plugin Commands
+## Plugin Commands
 
 - `Tag Note with Suggested Labels`  
   Interactive modal for approving and applying tag suggestions to the active note.
@@ -41,7 +41,7 @@
 
 ---
 
-## 🧠 Architecture
+## Architecture
 
 - `main.ts` — Plugin entrypoint and command registration  
 - `embedding.ts` — Local hashing and embedding  
@@ -54,7 +54,7 @@
 
 ---
 
-## 🛠 How It Works
+## How It Works
 
 1. Chuck reads the active note content.
 2. It generates a vector using local hash embeddings.
@@ -65,13 +65,13 @@
 
 ---
 
-## 🚫 No Cloud Dependency
+## No Cloud Dependency
 
 Chuck is completely self-contained. It never sends your notes outside Obsidian or requires internet access.
 
 ---
 
-## 🔧 Local Development
+## Local Development
 
 ```bash
 npm install
