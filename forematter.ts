@@ -1,5 +1,5 @@
 import { App, TFile } from "obsidian";
-import { suggestTagsForFile } from "./smartTagger";
+import { suggestTagsForFile } from "./smarttagger";
 import yaml from "js-yaml";
 
 // Helper to parse frontmatter
