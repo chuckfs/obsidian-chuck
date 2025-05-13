@@ -22,9 +22,7 @@ export function localHashEmbed(text: string): number[] {
   }
 
   return vec;
-}
 
-// In-memory vector store (used for temporary caching if needed)
 const vectorStore: Record<string, number[]> = {};
 
 export async function processVaultEmbeddings(app: App) {
@@ -38,7 +36,6 @@ export async function processVaultEmbeddings(app: App) {
   }
 }
 
-// Standard cosine similarity
 export function cosineSimilarity(vecA: number[], vecB: number[]): number {
   const dot = vecA.reduce((sum, val, i) => sum + val * vecB[i], 0);
   const magA = Math.sqrt(vecA.reduce((sum, val) => sum + val * val, 0));
