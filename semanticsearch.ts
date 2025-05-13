@@ -79,4 +79,3 @@ export async function semanticSearch(app: App, query: string) {
 
   const lines = results.map((r, i) => `${i + 1}. ${r.path} (score: ${r.score.toFixed(3)})`);
   new Notice("Top matches:\n" + lines.join("\n"));
-}
