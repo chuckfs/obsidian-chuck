@@ -1,5 +1,5 @@
-const fs = require('fs-extra');
-const path = require('path');
+import fs = import('fs-extra');
+import path = import('path');
 
 const headerPath = path.join(__dirname, '../templates/CODE_HEADER.txt');
 const extensions = ['.cpp', '.py', '.sh', '.js'];
