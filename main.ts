@@ -57,7 +57,7 @@ export default class ChuckPlugin extends Plugin {
             await classifyAndTag(this.app, file);
             tagged++;
           } catch (e) {
-            console.warn(`Autotag skipped ${file.path}: ${e.message}`);
+            console.warn(`Autotag skipped ${file.path}: ${(e as Error).message}`);
           }
         }
 
