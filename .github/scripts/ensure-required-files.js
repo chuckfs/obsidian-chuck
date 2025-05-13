@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-const path = require('path');
+import path from 'path';
 
 const filesToEnsure = ['LICENSE.md', 'README.md', 'PUBLIC_DISCLOSURE.md'];
 const templatesPath = path.join(__dirname, '../templates');
