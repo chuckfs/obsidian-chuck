@@ -45,20 +45,25 @@ export default class ChuckPlugin extends Plugin {
       }
     });
 
-    this.addCommand({
-      id: "autotag-vault",
-      name: "Autotag All Notes in Vault",
-      callback: async () => {
-        const files = this.app.vault.getMarkdownFiles();
-        for (const file of files) {
-          await classifyAndTag(this.app, file);
-        }
-        new Notice(`Tagged ${files.length} notes.`);
-      }
-    });
+this.addCommand({
+  id: "autotag-vault",
+  name: "Autotag All Notes in Vault",
+  callback: async () => {
+    const files = this.app.vault.getMarkdownFiles();
+    let tagged = 0;
 
-    this.addSettingTab(new LocalAISettingsTab(this.app, this));
+    for (const file of files) {
+      try {
+        await classifyAndTag(this.app, file);
+        tagged++;
+      } catch (e) {
+        console.warn(`Autotag skipped ${file.path}: ${e.message}`);
+      }
+    }
+
+    new Notice(`Tagged ${tagged} notes across vault.`);
   }
+});
 
   onunload() {
     console.log("Unloading Chuck Plugin");
