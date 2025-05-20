@@ -1,17 +1,33 @@
 {
-  "name": "local-ai-vault",
-  "version": "0.1.0",
-  "description": "Offline-only AI assistant plugin for Obsidian",
+  "name": "obsidian-chuck",
+  "version": "1.0.0",
+  "description": "A 100% offline AI assistant for intelligent note tagging, semantic search, and vector organization in Obsidian.",
   "main": "main.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "dev": "rollup -c -w",
+    "release": "npm run build && cp manifest.json styles.css dist/"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "ai",
+    "semantic-search",
+    "tagging",
+    "offline"
+  ],
+  "author": "Charles E. Drain (CHUCK)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chuckfs/obsidian-chuck"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
+    "obsidian": "^1.4.0",
     "rollup": "^4.15.2",
     "typescript": "^5.4.5"
   }
